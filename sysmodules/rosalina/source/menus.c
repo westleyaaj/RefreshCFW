@@ -127,7 +127,7 @@ void RosalinaMenu_Secret(void)
 
         u32 pressed = waitInputWithTimeout(1000);
 
-        else if(pressed & KEY_B)
+        if(pressed & KEY_B)
             return;
     }
     while(!menuShouldExit);
