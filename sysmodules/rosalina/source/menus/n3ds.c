@@ -41,9 +41,9 @@ static bool qtmCalRead = false;
 Menu N3DSMenu = {
     "New 3DS menu",
     {
+        { "Temporarily disable Super-Stable 3D", METHOD, .method = &N3DSMenu_ToggleSs3d, .visibility = &N3DSMenu_CheckNotN2dsXl },
         { "Enable L2 cache", METHOD, .method = &N3DSMenu_EnableDisableL2Cache },
         { clkRateBuf, METHOD, .method = &N3DSMenu_ChangeClockRate },
-        { "Temporarily disable Super-Stable 3D", METHOD, .method = &N3DSMenu_ToggleSs3d, .visibility = &N3DSMenu_CheckNotN2dsXl },
         { "Test parallax barrier positions", METHOD, .method = &N3DSMenu_TestBarrierPositions, .visibility = &N3DSMenu_CheckNotN2dsXl },
         { "Super-Stable 3D calibration", METHOD, .method = &N3DSMenu_Ss3dCalibration, .visibility = &N3DSMenu_CheckNotN2dsXl },
         {},
