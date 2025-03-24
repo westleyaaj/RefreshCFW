@@ -43,7 +43,7 @@
 #include "luma_config.h"
 
 Menu rosalinaMenu = {
-    "Rosalina menu",
+    "Launchstar Main Menu",
     {
         { "Take screenshot", METHOD, .method = &RosalinaMenu_TakeScreenshot },
         { "Screen filters...", MENU, .menu = &screenFiltersMenu },
@@ -55,10 +55,12 @@ Menu rosalinaMenu = {
         { "System configuration...", MENU, .menu = &sysconfigMenu },
         { "Miscellaneous options...", MENU, .menu = &miscellaneousMenu },
         { "Save settings", METHOD, .method = &RosalinaMenu_SaveSettings },
-        { "Power off / reboot", METHOD, .method = &RosalinaMenu_PowerOffOrReboot },
         { "System info", METHOD, .method = &RosalinaMenu_ShowSystemInfo },
         { "Credits", METHOD, .method = &RosalinaMenu_ShowCredits },
         { "Debug info", METHOD, .method = &RosalinaMenu_ShowDebugInfo, .visibility = &rosalinaMenuShouldShowDebugInfo },
+        {"-----------------------------"},
+        { "Power off", METHOD, .method = &RosalinaMenu_PowerOff },
+        { "Reboot", METHOD, .method = &RosalinaMenu_Reboot },
         {},
     }
 };
@@ -92,6 +94,43 @@ void RosalinaMenu_SaveSettings(void)
         Draw_Unlock();
     }
     while(!(waitInput() & KEY_B) && !menuShouldExit);
+}
+
+void RosalinaMenu_PowerOff(void)
+{
+    menuLeave();
+    srvPublishToSubscriber(0x203, 0);
+    return;
+}
+
+void RosalinaMenu_Reboot(void)
+{
+    menuLeave();
+    srvPublishToSubscriber(0x203, 0);
+    return;
+}
+
+void RosalinaMenu_Secret(void)
+{
+    Draw_Lock();
+    Draw_ClearFramebuffer();
+    Draw_FlushFramebuffer();
+    Draw_Unlock();
+
+    do
+    {
+        Draw_Lock();
+        Draw_DrawString(10, 10, COLOR_TITLE, "Secret");
+        Draw_DrawString(10, 30, COLOR_WHITE, "Hi this is my secret Menu.\nWhy is this here.\nI was lazy.\n\nB button to go back");
+        Draw_FlushFramebuffer();
+        Draw_Unlock();
+
+        u32 pressed = waitInputWithTimeout(1000);
+
+        else if(pressed & KEY_B)
+            return;
+    }
+    while(!menuShouldExit);
 }
 
 void RosalinaMenu_PowerOffOrReboot(void)
