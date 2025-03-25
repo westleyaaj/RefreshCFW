@@ -121,7 +121,7 @@ void RosalinaMenu_Secret(void)
     {
         Draw_Lock();
         Draw_DrawString(10, 10, COLOR_TITLE, "Secret");
-        Draw_DrawString(10, 30, COLOR_WHITE, "Hi this is my secret Menu.\nWhy is this here.\nI was lazy.\n\nB button to go back");
+        Draw_DrawString(10, 30, COLOR_GREEN, "Hi this is my secret Menu.\nWhy is this here.\nI was lazy.\n\nB button to go back");
         Draw_FlushFramebuffer();
         Draw_Unlock();
 

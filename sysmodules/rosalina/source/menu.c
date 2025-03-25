@@ -487,12 +487,15 @@ static void menuDraw(Menu *menu, u32 selected)
         u32 percentageFrac = (u32)(batteryPercentage * 10.0f) % 10u;
 
         char buf[32];
-        int n = sprintf(
-            buf, "   %02hhu\xF8""C  %lu.%02luV  %lu.%lu%%", batteryTemperature, // CP437
-            voltageInt, voltageFrac,
-            percentageInt, percentageFrac
-        );
-        Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, SCREEN_BOT_HEIGHT - 20, COLOR_WHITE, buf);
+        int n = sprintf(buf, "    Battery [%lu.%lu%%]", percentageInt, percentageFrac);
+        if (percentageInt > 30)
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_GREEN, buf);
+        else if (percentageInt > 10 && percentageInt <= 30)
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_YELLOW, buf);
+        else if (percentageInt > 0 && percentageInt <= 10)
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_RED, buf);
+        else
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, SCREEN_BOT_HEIGHT - 20, COLOR_WHITE, buf);
     }
     else
         Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - SPACING_X * 19, SCREEN_BOT_HEIGHT - 20, COLOR_WHITE, "%19s", "");
