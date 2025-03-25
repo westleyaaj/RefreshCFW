@@ -42,8 +42,8 @@ Menu N3DSMenu = {
     "New 3DS menu",
     {
         { "Temporarily disable Super-Stable 3D", METHOD, .method = &N3DSMenu_ToggleSs3d, .visibility = &N3DSMenu_CheckNotN2dsXl },
-        { "Enable L2 cache", METHOD, .method = &N3DSMenu_EnableDisableL2Cache },
         { clkRateBuf, METHOD, .method = &N3DSMenu_ChangeClockRate },
+        { "Enable L2 cache", METHOD, .method = &N3DSMenu_EnableDisableL2Cache },
         { "Test parallax barrier positions", METHOD, .method = &N3DSMenu_TestBarrierPositions, .visibility = &N3DSMenu_CheckNotN2dsXl },
         { "Super-Stable 3D calibration", METHOD, .method = &N3DSMenu_Ss3dCalibration, .visibility = &N3DSMenu_CheckNotN2dsXl },
         {},
@@ -66,7 +66,7 @@ void N3DSMenu_UpdateStatus(void)
     svcGetSystemInfo(&higherClkRate, 0x10001, 1);
     svcGetSystemInfo(&L2CacheEnabled, 0x10001, 2);
 
-    N3DSMenu.items[0].title = L2CacheEnabled ? "Disable L2 cache" : "Enable L2 cache";
+    N3DSMenu.items[2].title = L2CacheEnabled ? "Disable L2 cache" : "Enable L2 cache";
     sprintf(clkRateBuf, "Set clock rate to %luMHz", clkRate != 268 ? 268 : (u32)higherClkRate);
 
     if (N3DSMenu_CheckNotN2dsXl())
@@ -81,7 +81,7 @@ void N3DSMenu_UpdateStatus(void)
             qtmUnavailableAndNotBlacklisted = R_FAILED(QTMU_IsCurrentAppBlacklisted(&blacklisted)) || !blacklisted;
 
 
-        MenuItem *item = &N3DSMenu.items[2];
+        MenuItem *item = &N3DSMenu.items[0];
 
         if (lastUpdatedQtmStatus == QTM_STATUS_ENABLED)
             item->title = "Temporarily disable Super-Stable 3D";
