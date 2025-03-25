@@ -481,8 +481,8 @@ static void menuDraw(Menu *menu, u32 selected)
 
     if(mcuInfoRes == 0)
     {
-        u32 voltageInt = (u32)batteryVoltage;
-        u32 voltageFrac = (u32)(batteryVoltage * 100.0f) % 100u;
+        //u32 voltageInt = (u32)batteryVoltage; //Not used
+        //u32 voltageFrac = (u32)(batteryVoltage * 100.0f) % 100u;
         u32 percentageInt = (u32)batteryPercentage;
         u32 percentageFrac = (u32)(batteryPercentage * 10.0f) % 10u;
 
