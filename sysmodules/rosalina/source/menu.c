@@ -40,6 +40,9 @@
 #include "menus/screen_filters.h"
 #include "shell.h"
 
+// Define COLOR_YELLOW Compliyer cant find it in draw.h
+#define COLOR_YELLOW 0x00FFFF
+
 //#define ROSALINA_MENU_SELF_SCREENSHOT 1 // uncomment this to enable the feature
 
 u32 menuCombo = 0;
@@ -488,14 +491,14 @@ static void menuDraw(Menu *menu, u32 selected)
 
         char buf[32];
         int n = sprintf(buf, "    Battery [%lu.%lu%%]", percentageInt, percentageFrac);
-        if (percentageInt > 30)
-            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_GREEN, buf);
-        else if (percentageInt > 10 && percentageInt <= 30)
-            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_YELLOW, buf);
-        else if (percentageInt > 0 && percentageInt <= 10)
+        
+        if (percentageInt > 0)
             Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_RED, buf);
-        else
-            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, SCREEN_BOT_HEIGHT - 20, COLOR_WHITE, buf);
+        if (percentageInt > 10)
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_GREEN, buf);
+        if (percentageInt > 30 )
+            Draw_DrawString(SCREEN_BOT_WIDTH - 10 - SPACING_X * n, 10, COLOR_YELLOW, buf);
+
     }
     else
         Draw_DrawFormattedString(SCREEN_BOT_WIDTH - 10 - SPACING_X * 19, SCREEN_BOT_HEIGHT - 20, COLOR_WHITE, "%19s", "");
